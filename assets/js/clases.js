@@ -43,20 +43,34 @@ class Reserva {
     }
     buscar(dni) {
         let dniHTML;
-        reserva.dniBuscado = reserva.pasajeros.filter((elemento, i) => {
+        let dniBuscado = this.pasajeros.filter((elemento, i) => {
             return elemento.dni == dni;
         });
-        if (reserva.dniBuscado.length != 0) {
+        if (dniBuscado.length != 0) {
             dniHTML = `<div class='row'>\
-            <div class='col col-xl-2 col-sm-2 '>${reserva.dniBuscado[0].nroAsiento}</div>\
-            <div class='col col-xl-5 col-sm-5'>${reserva.dniBuscado[0].nombre}</div>\
-            <div class='col col-xl-2 col-sm-3'>${reserva.dniBuscado[0].dni}</div>\
+            <div class='col col-xl-2 col-sm-2 '>${dniBuscado[0].nroAsiento}</div>\
+            <div class='col col-xl-5 col-sm-5'>${dniBuscado[0].nombre}</div>\
+            <div class='col col-xl-2 col-sm-2'>${dniBuscado[0].dni}</div>\
             </div>`;
         } else {
             dniHTML = `No hay Resultados`;
         }
         return dniHTML;
     }
+    eliminar(nro) {
+        if (nro != '') {
+            let indice;
+            this.pasajeros.map((elemento, i) => {
+                return (nro == elemento.nroAsiento) ? indice = i : '';
+            });
+            //console.log(indice);
+            $('#' + this.pasajeros[indice].nroAsiento).removeClass('reservado')
+            this.pasajeros.splice(indice, 1);
+        } else {
+            console.log('nada para eliminar')
+        }
+    }
+
 }
 class vistaHTML {
     constructor(cantidadAsientos, columnas) {
@@ -121,7 +135,7 @@ class vistaHTML {
         $('#listaPasajeros').html(this.reserva.listarPasajeros())
     }
     buscarDNI() {
-        $('#listaPasajeros').html((this.reserva.buscar($('#buscarDni').val())))
+        $('#listaPasajeros').html((this.reserva.buscar($('#buscarDni').val())));
     }
     limpiarInputs() {
         $('#nro_Asiento').val('')
@@ -133,116 +147,13 @@ class vistaHTML {
             return $('#' + elemento.nroAsiento).addClass('reservado');
         });
     }
+    eliminarReserva() {
+        this.reserva.eliminar($('#nro_Asiento').val());
+        console.log(this.reserva.pasajeros)
+        this.colorearAsientos();
+        this.limpiarInputs();
+    }
 }
 
 let dibujarBus = new vistaHTML(40, 4);
 dibujarBus.configurarBTN();
-//dibujarBus.busHTML(); //imprime bus y asientos
-//let reservaAsiento = new Reserva(mapabus)
-
-
-
-
-
-/*
-    class  reserva {
-    
-    dniBuscado: undefined,
-    inicio: () => {
-        $('#bus').html(busMapa);
-        reserva.colorearAsientos();
-        $('.col-xl-2').click(reserva.reservarAsiento);
-        $('#guardarDatos').click(reserva.guardarDatos);
-        $('#mostrarLista').click(reserva.mostrarLista);
-        $('#btnBuscar').click(reserva.buscarDNI);
-        $('#eliminarReserva').click(reserva.eliminarReserva);
-    },
-    reservarAsiento: (event) => {
-        let nro = event.target.textContent;
-        let clase = event.target.classList[2];
-        $('#nro_Asiento').val(nro);
-        if (clase != undefined) {
-            let asiento = reserva.pasajeros.filter((elemento, i) => {
-                return elemento.nroAsiento == nro;
-            });
-            $('#nombreApellido').val(asiento[0].nombre);
-            $('#dni').val(asiento[0].dni);
-        }
-    },
-    guardarDatos: () => {
-        let clase = $('#' + $('#nro_Asiento').val())[0].classList[2];
-        console.log(clase)
-        if ($('#nro_Asiento').val() != "" && $('#nombreApellido').val() != "" && $('#dni').val() != "" && clase != 'reservado') {
-            let datos = {
-                nroAsiento: $('#nro_Asiento').val(),
-                nombre: $('#nombreApellido').val(),
-                dni: $('#dni').val(),
-                estado: true
-            };
-            $('#alerta').html(`<div class="alert alert-success" role="alert">Guardado con Exito!!</div>`)
-            reserva.pasajeros.push(datos);
-            reserva.colorearAsientos();
-            reserva.limpiarInputs();
-        }
-        if (clase == 'reservado') {
-            $('#alerta').html(`<div class="alert alert-danger" role="alert">Eliminar Reserva para Agregar</div>`)
-        }
-
-    },
-    mostrarLista: () => {
-        let lista = "";
-        reserva.pasajeros.map((elemento) => {
-            lista += `<div class='row'>\
-            <div class='col col-xl-2 col-sm-2'>${elemento.nroAsiento}</div>\
-            <div class='col col-xl-5 col-sm-5'>${elemento.nombre}</div>\
-            <div class='col col-xl-2 col-sm-2'>${elemento.dni}</div>\
-            </div>`;
-        });
-        $('#listaPasajeros').html(lista)
-    },
-    buscarDNI: () => {
-        let dni = $('#buscarDni').val();
-        reserva.dniBuscado = reserva.pasajeros.filter((elemento, i) => {
-            return elemento.dni == dni;
-        });
-        if (reserva.dniBuscado.length != 0) {
-            $('#listaPasajeros').html(`<div class='row'>\
-            <div class='col col-xl-2 col-sm-2 '>${reserva.dniBuscado[0].nroAsiento}</div>\
-            <div class='col col-xl-5 col-sm-5'>${reserva.dniBuscado[0].nombre}</div>\
-            <div class='col col-xl-2 col-sm-3'>${reserva.dniBuscado[0].dni}</div>\
-            </div>`);
-        } else {
-            $('#listaPasajeros').html(`No hay Resultados`);
-        }
-    },
-    eliminarReserva: () => {
-        let nro = $('#nro_Asiento').val();
-        let indice;
-        reserva.pasajeros.map((elemento, i) => {
-            return (nro == elemento.nroAsiento) ? indice = i : '';
-        });
-        //console.log(indice);
-        $('#' + reserva.pasajeros[indice].nroAsiento).removeClass('reservado')
-        reserva.pasajeros.splice(indice, 1);
-        reserva.colorearAsientos();
-        reserva.limpiarInputs();
-
-    },
-    limpiarInputs: () => {
-        $('#nro_Asiento').val('')
-        $('#nombreApellido').val('');
-        $('#dni').val('');
-    },
-    colorearAsientos: () => {
-        reserva.pasajeros.map((elemento, i) => {
-            return $('#' + elemento.nroAsiento).addClass('reservado');
-        });
-    }
-}
-*/
-/*
-new Pasajeros("39", "Maritza Fernandes", "89898998");
-new Pasajeros("3", "Carolina Baez", "89823398");
-console.log(MapaBus);
-console.log(Pasajeros);
-console.log(new Pasajeros("15", "Elizabeth Mamani", "12121298"));*/

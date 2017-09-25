@@ -41,10 +41,8 @@ const reserva = {
     dniBuscado : undefined,
     inicio: () => {
         $('#bus').html(busMapa);
+        reserva.colorearAsientos();
         $('.col-xl-2').click(reserva.reservarAsiento);
-        /** opcional solo hubiera datos en pasajeros []*/
-        reserva.colorearAsientos()
-        /** */
         $('#guardarDatos').click(reserva.guardarDatos);
         $('#mostrarLista').click(reserva.mostrarLista);
         $('#btnBuscar').click(reserva.buscarDNI);

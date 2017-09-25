@@ -85,9 +85,9 @@ const reserva = {
         let lista = "";
         reserva.pasajeros.map((elemento) => {
             lista += `<div class='row'>\
-            <div class='col-xl-2 col-sm-2'>${elemento.nroAsiento}</div>\
-            <div class='col-xl-5 col-sm-5'>${elemento.nombre}</div>\
-            <div class='col-xl-2 col-sm-2'>${elemento.dni}</div>\
+            <div class='col col-xl-2 col-sm-2'>${elemento.nroAsiento}</div>\
+            <div class='col col-xl-5 col-sm-5'>${elemento.nombre}</div>\
+            <div class='col col-xl-2 col-sm-2'>${elemento.dni}</div>\
             </div>`;
         });
         $('#listaPasajeros').html(lista)

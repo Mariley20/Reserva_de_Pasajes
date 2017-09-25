@@ -20,6 +20,10 @@ table td{
 .reservado {
     background: #3dda16;
 }
+#bus .col-xl-2 {
+    border: 1px solid #17a2b8;
+    border-radius: 2px;
+}
 .inputDNI {
     padding: 15px 0;
 }
@@ -37,4 +41,7 @@ form .btn {
     padding: 10px 3px;
     color: white;
     border: 1px solid #FFFFFF;
+}
+#listaPasajeros .row div{
+    border: 1px solid #17a2b8;
 }

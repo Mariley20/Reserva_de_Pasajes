@@ -1,8 +1,8 @@
 'use strict'
 class Pasajero {
-    constructor(nombre, nroAsiento, dni) {
-        this.nombre = nombre;
+    constructor(nroAsiento, nombre, dni) {
         this.nroAsiento = nroAsiento;
+        this.nombre = nombre;
         this.dni = dni;
     }
 }
@@ -29,6 +29,17 @@ class Reserva {
     guardarAsiento(nro_Asiento, nombre, dni) {
         this.pasajeros.push(new Pasajero(nro_Asiento, nombre, dni));
         console.log(this.pasajeros);
+    }
+    listarPasajeros() {
+        let lista = "";
+        this.pasajeros.map((elemento) => {
+            lista += `<div class='row'>\
+            <div class='col col-xl-2 col-sm-2'>${elemento.nroAsiento}</div>\
+            <div class='col col-xl-5 col-sm-5'>${elemento.nombre}</div>\
+            <div class='col col-xl-2 col-sm-2'>${elemento.dni}</div>\
+            </div>`;
+        });
+        return lista
     }
 
 }
@@ -68,19 +79,36 @@ class vistaHTML {
 
     }
     seleccionaAsiento(event) {
-        console.log(event);
-        console.log(this.reserva.pasajeros)
         let nro = event.target.textContent;
         let clase = event.target.classList[2];
         $('#nro_Asiento').val(nro);
         if (clase != undefined) {
-            console.log(this.reserva.pasajeros)
             let asiento = this.reserva.pasajeros.filter((elemento, i) => {
                 return elemento.nroAsiento == nro;
             });
             $('#nombreApellido').val(asiento[0].nombre);
             $('#dni').val(asiento[0].dni);
         }
+    }
+    guardarDatos() {
+        let clase = $('#' + $('#nro_Asiento').val())[0].classList[2];
+        if ($('#nro_Asiento').val() != "" && $('#nombreApellido').val() != "" && $('#dni').val() != "" && clase != 'reservado') {
+            $('#alerta').html(`<div class="alert alert-success" role="alert">Guardado con Exito!!</div>`);
+            this.reserva.guardarAsiento($('#nro_Asiento').val(), $('#nombreApellido').val(), $('#dni').val())
+            this.colorearAsientos();
+            this.limpiarInputs();
+        }
+        if (clase == 'reservado') {
+            $('#alerta').html(`<div class="alert alert-danger" role="alert">Eliminar Reserva para Agregar</div>`)
+        }
+    }
+    mostrarLista() {
+        $('#listaPasajeros').html(this.reserva.listarPasajeros())
+    }
+    limpiarInputs() {
+        $('#nro_Asiento').val('')
+        $('#nombreApellido').val('');
+        $('#dni').val('');
     }
     colorearAsientos() {
         this.reserva.pasajeros.map((elemento, i) => {

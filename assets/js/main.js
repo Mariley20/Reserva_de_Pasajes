@@ -1,24 +1,26 @@
 'use strict'
-const busMapa = function () {
-    let cantidadAsiento = 40;
-    let columnas = 4;
-    let filas = cantidadAsiento / columnas;
-    let asientosHTML = "",
-        numeroDeAsiento = 1;
-    for (let i = 1; i <= filas; i++) {
-        asientosHTML += `<div class='row' id='fila${i}'>`;
+const busMapa = function() {
+        let cantidadAsiento = 40;
+        let columnas = 4;
+        let filas = cantidadAsiento / columnas;
+        let asientosHTML = "",
+            numeroDeAsiento = 1;
+        for (let i = 1; i <= filas; i++) {
+            asientosHTML += `<div class='row' id='fila${i}'>`;
 
-        for (let j = 0; j < columnas; j++) {
-            asientosHTML += `<div class='col col-xl-2' id='${numeroDeAsiento}'>${numeroDeAsiento}</div>`;
-            numeroDeAsiento += 1;
-            (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
+            for (let j = 0; j < columnas; j++) {
+                asientosHTML += `<div class='col col-xl-2' id='${numeroDeAsiento}'>${numeroDeAsiento}</div>`;
+                numeroDeAsiento += 1;
+                (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
+
+            }
+            asientosHTML += "</div>";
 
         }
-        asientosHTML += "</div>";
-
+        return asientosHTML;
     }
-    return asientosHTML;
-}
+    /** ------- -----  */
+
 const reserva = {
     pasajeros: [{
             nroAsiento: "39",

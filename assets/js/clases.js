@@ -39,9 +39,24 @@ class Reserva {
             <div class='col col-xl-2 col-sm-2'>${elemento.dni}</div>\
             </div>`;
         });
-        return lista
+        return lista;
     }
-
+    buscar(dni) {
+        let dniHTML;
+        reserva.dniBuscado = reserva.pasajeros.filter((elemento, i) => {
+            return elemento.dni == dni;
+        });
+        if (reserva.dniBuscado.length != 0) {
+            dniHTML = `<div class='row'>\
+            <div class='col col-xl-2 col-sm-2 '>${reserva.dniBuscado[0].nroAsiento}</div>\
+            <div class='col col-xl-5 col-sm-5'>${reserva.dniBuscado[0].nombre}</div>\
+            <div class='col col-xl-2 col-sm-3'>${reserva.dniBuscado[0].dni}</div>\
+            </div>`;
+        } else {
+            dniHTML = `No hay Resultados`;
+        }
+        return dniHTML;
+    }
 }
 class vistaHTML {
     constructor(cantidadAsientos, columnas) {
@@ -104,6 +119,9 @@ class vistaHTML {
     }
     mostrarLista() {
         $('#listaPasajeros').html(this.reserva.listarPasajeros())
+    }
+    buscarDNI() {
+        $('#listaPasajeros').html((this.reserva.buscar($('#buscarDni').val())))
     }
     limpiarInputs() {
         $('#nro_Asiento').val('')

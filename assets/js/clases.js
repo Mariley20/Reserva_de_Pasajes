@@ -1,46 +1,106 @@
 'use strict'
-const busMapa = function() {
-        let cantidadAsiento = 40;
-        let columnas = 4;
-        let filas = cantidadAsiento / columnas;
-        let asientosHTML = "",
-            numeroDeAsiento = 1;
-        for (let i = 1; i <= filas; i++) {
-            asientosHTML += `<div class='row' id='fila${i}'>`;
+class Pasajero {
+    constructor(nombre, nroAsiento, dni) {
+        this.nombre = nombre;
+        this.nroAsiento = nroAsiento;
+        this.dni = dni;
+    }
+}
+class Reserva {
+    constructor() {
+        this.pasajeros = [{
+                nroAsiento: "39",
+                nombre: "Maritza Fernandes",
+                dni: "89898998"
+            },
+            {
+                nroAsiento: "3",
+                nombre: "Carolina Baez",
+                dni: "89236723"
+            },
+            {
+                nroAsiento: "15",
+                nombre: "Elizabeth Mamani",
+                dni: "78723211"
+            }
+        ];
 
-            for (let j = 0; j < columnas; j++) {
-                asientosHTML += `<div class='col col-xl-2' id='${numeroDeAsiento}'>${numeroDeAsiento}</div>`;
-                numeroDeAsiento += 1;
-                (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
+    }
+    guardarAsiento(nro_Asiento, nombre, dni) {
+        this.pasajeros.push(new Pasajero(nro_Asiento, nombre, dni));
+        console.log(this.pasajeros);
+    }
+
+}
+class vistaHTML {
+    constructor(cantidadAsientos, columnas) {
+        this.cantidadAsiento = cantidadAsientos;
+        this.columnas = columnas;
+        this.reserva = new Reserva();
+        this.busHTML = () => {
+            this.filas = this.cantidadAsiento / columnas;
+            let asientosHTML = "",
+                numeroDeAsiento = 1;
+            for (let i = 1; i <= this.filas; i++) {
+                asientosHTML += `<div class='row' id='fila${i}'>`;
+
+                for (let j = 0; j < this.columnas; j++) {
+                    asientosHTML += `<div class='col col-xl-2' id='${numeroDeAsiento}'>${numeroDeAsiento}</div>`;
+                    numeroDeAsiento += 1;
+                    (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
+
+                }
+                asientosHTML += "</div>";
 
             }
-            asientosHTML += "</div>";
-
-        }
-        return asientosHTML;
+            return asientosHTML;
+            //return $('#bus').html(asientosHTML);
+        };
     }
-    /** ------- -----  */
+    configurarBTN() {
+        $('#bus').html(this.busHTML());
+        this.colorearAsientos();
+        $('.col-xl-2').click((event) => this.seleccionaAsiento(event));
+        $('#guardarDatos').click((event) => this.guardarDatos(event));
+        $('#mostrarLista').click((event) => this.mostrarLista(event));
+        $('#btnBuscar').click((event) => this.buscarDNI(event));
+        $('#eliminarReserva').click((event) => this.eliminarReserva(event));
 
-const reserva = {
-    pasajeros: [{
-            nroAsiento: "39",
-            nombre: "Maritza Fernandes",
-            dni: "89898998",
-            estado: true
-        },
-        {
-            nroAsiento: "3",
-            nombre: "Carolina Baez",
-            dni: "89236723",
-            estado: true
-        },
-        {
-            nroAsiento: "15",
-            nombre: "Elizabeth Mamani",
-            dni: "78723211",
-            estado: true
+    }
+    seleccionaAsiento(event) {
+        console.log(event);
+        console.log(this.reserva.pasajeros)
+        let nro = event.target.textContent;
+        let clase = event.target.classList[2];
+        $('#nro_Asiento').val(nro);
+        if (clase != undefined) {
+            console.log(this.reserva.pasajeros)
+            let asiento = this.reserva.pasajeros.filter((elemento, i) => {
+                return elemento.nroAsiento == nro;
+            });
+            $('#nombreApellido').val(asiento[0].nombre);
+            $('#dni').val(asiento[0].dni);
         }
-    ],
+    }
+    colorearAsientos() {
+        this.reserva.pasajeros.map((elemento, i) => {
+            return $('#' + elemento.nroAsiento).addClass('reservado');
+        });
+    }
+}
+
+let dibujarBus = new vistaHTML(40, 4);
+dibujarBus.configurarBTN();
+//dibujarBus.busHTML(); //imprime bus y asientos
+//let reservaAsiento = new Reserva(mapabus)
+
+
+
+
+
+/*
+    class  reserva {
+    
     dniBuscado: undefined,
     inicio: () => {
         $('#bus').html(busMapa);
@@ -133,4 +193,10 @@ const reserva = {
         });
     }
 }
-$(document).ready(reserva.inicio);
+*/
+/*
+new Pasajeros("39", "Maritza Fernandes", "89898998");
+new Pasajeros("3", "Carolina Baez", "89823398");
+console.log(MapaBus);
+console.log(Pasajeros);
+console.log(new Pasajeros("15", "Elizabeth Mamani", "12121298"));*/

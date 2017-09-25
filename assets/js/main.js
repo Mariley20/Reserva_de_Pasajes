@@ -42,12 +42,15 @@ const reserva = {
     inicio: () => {
         $('#bus').html(busMapa);
         $('.col-xl-2').click(reserva.reservarAsiento);
+        /** opcional solo hubiera datos en pasajeros []*/
+        reserva.colorearAsientos()
+        /** */
         $('#guardarDatos').click(reserva.guardarDatos);
         $('#mostrarLista').click(reserva.mostrarLista);
         $('#btnBuscar').click(reserva.buscarDNI);
+        $('#eliminarReserva').click(reserva.eliminarReserva);
     },
     reservarAsiento: (event) => {
-        console.log(event)
         let nro = event.target.textContent;
         let clase = event.target.classList[2];
         $('#nro_Asiento').val(nro);
@@ -99,10 +102,23 @@ const reserva = {
             $('#listaPasajeros').html(`No hay Resultados`);
         }
     },
+    eliminarReserva: () => {
+        let nro = $('#nro_Asiento').val();
+        let indice;
+        reserva.pasajeros.map((elemento, i) => {
+            return (nro == elemento.nroAsiento)? indice = i : '';
+        });
+        //console.log(indice);
+        reserva.pasajeros.splice(indice, 1);
+    },
     limpiarInputs : () => {
         $('#nro_Asiento').val('')
         $('#nombreApellido').val('');
         $('#dni').val('');
+    },
+    colorearAsientos : () => {
+        
+        
     }
  }
 $(document).ready(reserva.inicio);

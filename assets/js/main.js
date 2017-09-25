@@ -61,16 +61,21 @@ const reserva = {
         }
     },
     guardarDatos: () => {
-        if ($('#nro_Asiento').val() != "" && $('#nombreApellido').val() != "" && $('#dni').val() != "") {
+        let clase = $('#'+$('#nro_Asiento').val())[0].classList[2];
+        console.log(clase)
+        if ($('#nro_Asiento').val() != "" && $('#nombreApellido').val() != "" && $('#dni').val() != "" && clase != 'reservado') {
             let datos = {
                 nroAsiento: $('#nro_Asiento').val(),
                 nombre: $('#nombreApellido').val(),
                 dni: $('#dni').val(),
                 estado: true
             };
+            $('#alerta').html(`<div class="alert alert-success" role="alert">Guardado con Exito!!</div>`)
             reserva.pasajeros.push(datos);
             reserva.colorearAsientos();
             reserva.limpiarInputs();
+        } if(clase == 'reservado'){
+            $('#alerta').html(`<div class="alert alert-danger" role="alert">Eliminar Reserva para Agregar</div>`)
         }
         
     },
@@ -122,6 +127,8 @@ const reserva = {
         reserva.pasajeros.map((elemento, i) => {
             return $('#'+elemento.nroAsiento).addClass('reservado');
         });
+    },
+    noDuplicadosAsientos : () => {
         
     }
  }

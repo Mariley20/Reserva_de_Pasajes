@@ -71,7 +71,7 @@ const reserva = {
                 estado: true
             };
             reserva.pasajeros.push(datos);
-            $('#'+datos.nroAsiento).addClass('reservado');
+            reserva.colorearAsientos();
             reserva.limpiarInputs();
         }
         
@@ -109,7 +109,11 @@ const reserva = {
             return (nro == elemento.nroAsiento)? indice = i : '';
         });
         //console.log(indice);
+        $('#'+reserva.pasajeros[indice].nroAsiento).removeClass('reservado')
         reserva.pasajeros.splice(indice, 1);
+        reserva.colorearAsientos();
+        reserva.limpiarInputs();
+
     },
     limpiarInputs : () => {
         $('#nro_Asiento').val('')
@@ -117,7 +121,9 @@ const reserva = {
         $('#dni').val('');
     },
     colorearAsientos : () => {
-        
+        reserva.pasajeros.map((elemento, i) => {
+            return $('#'+elemento.nroAsiento).addClass('reservado');
+        });
         
     }
  }

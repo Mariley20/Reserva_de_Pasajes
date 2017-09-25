@@ -1,18 +1,19 @@
 'use strict'
 const busMapa = function () {
     let cantidadAsiento = 40;
-    let filas = 4;
-    let columnas = cantidadAsiento / filas;
-    let asientosHTML = "";
-    let numeroDeAsiento = 1;
-    for (let i = 1; i <= columnas; i++) {
+    let columnas = 4;
+    let filas = cantidadAsiento / columnas;
+    let pasillo = "",
+        asientosHTML = "", numeroDeAsiento = 1;
+    for (let i = 1; i <= filas; i++) {
         asientosHTML += `<tr id='fila${i}'>`;
-        for (let j = 0; j < filas; j++) {
+        
+        for (let j = 0; j < columnas; j++) {
             asientosHTML += `<td id='${i}-${j}'>${numeroDeAsiento}</td>`;
-            numeroDeAsiento ++;
+            numeroDeAsiento += 1;
         }
-        asientosHTML += "</tr>";
-        //numeroDeAsiento ++;
+        (numeroDeAsiento == 3) ? pasillo += "<td></td>": pasillo = "";
+        asientosHTML += "</tr>" + pasillo;
     }
     return asientosHTML;
 }

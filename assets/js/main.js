@@ -3,17 +3,18 @@ const busMapa = function () {
     let cantidadAsiento = 40;
     let columnas = 4;
     let filas = cantidadAsiento / columnas;
-    let pasillo = "",
-        asientosHTML = "", numeroDeAsiento = 1;
+    let asientosHTML = "", numeroDeAsiento = 1;
     for (let i = 1; i <= filas; i++) {
-        asientosHTML += `<tr id='fila${i}'>`;
+        asientosHTML += `<div class='row' id='fila${i}'>`;
         
         for (let j = 0; j < columnas; j++) {
-            asientosHTML += `<td id='${i}-${j}'>${numeroDeAsiento}</td>`;
+            asientosHTML += `<div class='col col-xl-2' id='${i}-${j}'>${numeroDeAsiento}</div>`;
             numeroDeAsiento += 1;
+            (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
+            
         }
-        (numeroDeAsiento == 3) ? pasillo += "<td></td>": pasillo = "";
-        asientosHTML += "</tr>" + pasillo;
+        asientosHTML += "</div>";
+        
     }
     return asientosHTML;
 }
@@ -40,7 +41,7 @@ const reserva = {
     dniBuscado : undefined,
     inicio: () => {
         $('#bus').html(busMapa);
-        $('td').click(reserva.reservarAsiento);
+        $('.col-xl-2').click(reserva.reservarAsiento);
         $('#guardarDatos').click(reserva.guardarDatos);
         $('#mostrarLista').click(reserva.mostrarLista);
         $('#btnBuscar').click(reserva.buscarDNI);

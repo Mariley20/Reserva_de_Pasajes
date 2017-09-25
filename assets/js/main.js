@@ -8,7 +8,7 @@ const busMapa = function () {
         asientosHTML += `<div class='row' id='fila${i}'>`;
         
         for (let j = 0; j < columnas; j++) {
-            asientosHTML += `<div class='col col-xl-2' id='${i}-${j}'>${numeroDeAsiento}</div>`;
+            asientosHTML += `<div class='col col-xl-2' id='${numeroDeAsiento}'>${numeroDeAsiento}</div>`;
             numeroDeAsiento += 1;
             (j == 1) ? asientosHTML += "<div class='col col-xl-1'></div>": asientosHTML += "";
             
@@ -59,8 +59,8 @@ const reserva = {
                 estado: true
             };
             reserva.pasajeros.push(datos);
+            $('#'+datos.nroAsiento).addClass('reservado');
         }
-        console.log(reserva.pasajeros)
     },
     mostrarLista: () => {
         let lista = "";

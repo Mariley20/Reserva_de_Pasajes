@@ -3,3 +3,9 @@ table td{
     width: 20px;
     border: 1px solid black;
 }
+.reservado {
+    background: red;
+}
+.NoReservado{
+    background: transparent;
+}

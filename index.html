@@ -12,12 +12,16 @@
 </head>
 
 <body>
+    <header>
+        <div class="text-center"><h1>Reserva tu Asiento</h1></div>
+    </header>
     <section>
-        <div class="row">
-            <div class="col-sm-5">
+        <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <div class="col col-xl-5 col-sm-5 text-center">
                 <div id="bus"></div>
             </div>
-            <div class="col-sm-5">
+            <div class="col col-xl-4 col-sm-4">
                 <form>
                     <div class="form-group">
                         <label class="form-control-label" for="nro_Asiento">Datos Personales</label>
@@ -30,17 +34,16 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="nombreApellido" placeholder="Nombres y Apellidos">
-                    </div><div class="form-group" id="alerta">
-                        
                     </div>
-                    <button type="button" id="guardarDatos" class="btn btn-primary">Guardar</button>
-                    <button type="button" id="eliminarReserva" class="btn btn-secondary">Eliminar Reserva</button>
-                    <button type="button" id="mostrarLista" class="btn btn-secondary">Lista de Pasajeros</button>
+                    <div class="form-group" id="alerta"></div>
+                    <button type="button" id="guardarDatos" class="btn btn-primary">Guardar Reserva</button>
+                    <button type="button" id="eliminarReserva" class="btn btn-danger">Eliminar Reserva</button>
+                    <button type="button" id="mostrarLista" class="btn btn-secondary">Listar de Pasajeros</button>
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-10">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-5 inputDNI">
                 <div class="input-group">
                     <input type="text" class="form-control" id="buscarDni" placeholder="Buscar DNI" aria-label="Search for...">
                     <span class="input-group-btn">
@@ -49,11 +52,12 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-md-center">
             <div class="col-sm-10">
                 <div id="listaPasajeros"></div>
             </div>
         </div>
+    </div>
     </section>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"

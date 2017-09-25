@@ -87,7 +87,7 @@ const reserva = {
             lista += `<div class='row'>\
             <div class='col-sm-2'>${elemento.nroAsiento}</div>\
             <div class='col-sm-5'>${elemento.nombre}</div>\
-            <div class='col-sm-4'>${elemento.dni}</div>\
+            <div class='col-sm-2'>${elemento.dni}</div>\
             </div>`;
         });
         $('#listaPasajeros').html(lista)
@@ -99,9 +99,9 @@ const reserva = {
         });
         if (reserva.dniBuscado.length != 0) {
             $('#listaPasajeros').html(`<div class='row'>\
-            <div class='col-sm-2'>${reserva.dniBuscado[0].nroAsiento}</div>\
-            <div class='col-sm-5'>${reserva.dniBuscado[0].nombre}</div>\
-            <div class='col-sm-4'>${reserva.dniBuscado[0].dni}</div>\
+            <div class='col col-xl-2 col-sm-2 '>${reserva.dniBuscado[0].nroAsiento}</div>\
+            <div class='col col-xl-5 col-sm-5'>${reserva.dniBuscado[0].nombre}</div>\
+            <div class='col col-xl-2 col-sm-3'>${reserva.dniBuscado[0].dni}</div>\
             </div>`);
         } else {
             $('#listaPasajeros').html(`No hay Resultados`);

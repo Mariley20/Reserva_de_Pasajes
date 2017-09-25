@@ -26,7 +26,7 @@ const reserva = {
             estado: true
         },
         {
-            nroAsiento: "39",
+            nroAsiento: "3",
             nombre: "Carolina Baez",
             dni: "89236723",
             estado: true
@@ -47,8 +47,17 @@ const reserva = {
         $('#btnBuscar').click(reserva.buscarDNI);
     },
     reservarAsiento: (event) => {
+        console.log(event)
         let nro = event.target.textContent;
+        let clase = event.target.classList[2];
         $('#nro_Asiento').val(nro);
+        if(clase != undefined){
+           let asiento = reserva.pasajeros.filter((elemento,i) => {
+                return elemento.nroAsiento == nro;
+           });
+            $('#nombreApellido').val(asiento[0].nombre);
+            $('#dni').val(asiento[0].dni);
+        }
     },
     guardarDatos: () => {
         if ($('#nro_Asiento').val() != "" && $('#nombreApellido').val() != "" && $('#dni').val() != "") {
@@ -60,7 +69,9 @@ const reserva = {
             };
             reserva.pasajeros.push(datos);
             $('#'+datos.nroAsiento).addClass('reservado');
+            reserva.limpiarInputs();
         }
+        
     },
     mostrarLista: () => {
         let lista = "";
@@ -88,6 +99,10 @@ const reserva = {
             $('#listaPasajeros').html(`No hay Resultados`);
         }
     },
-    
-}
+    limpiarInputs : () => {
+        $('#nro_Asiento').val('')
+        $('#nombreApellido').val('');
+        $('#dni').val('');
+    }
+ }
 $(document).ready(reserva.inicio);

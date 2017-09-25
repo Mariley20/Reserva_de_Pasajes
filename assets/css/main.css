@@ -32,3 +32,9 @@ table td{
 form .btn {
     margin: 3px 0;
 }
+.tablaPasajeros div{
+    background: #17a2b8;
+    padding: 10px 3px;
+    color: white;
+    border: 1px solid #FFFFFF;
+}

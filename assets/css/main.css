@@ -3,9 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+header{
+    background: #17a2b8;
+    margin-bottom: 10px 0;
+    color: white;
+}
 header h1{
-    font-size: 3vh;
-    padding: 10px 0;
+    font-size: 3vw;
+    padding: 30px 0;
 }
 table td{
     height: 20px;
@@ -13,10 +18,16 @@ table td{
     border: 1px solid black;
 }
 .reservado {
-    background: red;
+    background: #3dda16;
 }
 .inputDNI {
     padding: 15px 0;
+}
+.datosPersonles h1{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 3vw;
 }
 form .btn {
     margin: 3px 0;
